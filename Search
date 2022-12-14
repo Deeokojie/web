@@ -1,0 +1,31 @@
+SearchTab::searchButtonClicked()
+{
+    QString search = ui->searchQuery->text();
+
+    if (search.isEmpty())
+        return;
+
+    SqlUtilities::clearSearch();
+    ui->searchWidget->hide();
+    ui->searchSpinnerWidget->show();
+    pSpinnerMovie->start();
+    mSearchCount = 0;
+    int index = ui->trackerCombo->currentIndex();
+    QString selected = ui->trackerCombo->currentText();
+    QSettings settings("patient record");
+    settings.setValue("last-search-query", search);
+
+    QMapIterator<QString, Backend*> i(mIdMap);
+    while (i.hasNext())
+    {
+        i.next();
+        Backend *b = i.value();
+
+        if ((index == 0)
+            || (b->name() == selected))
+        {
+            mSearchCount++;
+            b->search(search);
+        }
+     }
+}
