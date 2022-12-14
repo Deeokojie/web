@@ -17,7 +17,7 @@ SearchTab::searchButtonClicked()
     QSettings settings("patient record");
     settings.setValue("last-search-query", search);
     
-    //search through list, how many times did the the name selected appear 
+    //search through list, how many times did the the name selected appear? 
     QMapIterator<QString, Backend*> i(mIdMap);
     while (i.hasNext())
     {
