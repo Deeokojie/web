@@ -1,10 +1,12 @@
 SearchTab::searchButtonClicked()
 {
+    //seacrch string
     QString search = ui->searchQuery->text();
 
     if (search.isEmpty())
         return;
 
+    //delete list and start again
     SqlUtilities::clearSearch();
     ui->searchWidget->hide();
     ui->searchSpinnerWidget->show();
@@ -14,7 +16,8 @@ SearchTab::searchButtonClicked()
     QString selected = ui->trackerCombo->currentText();
     QSettings settings("patient record");
     settings.setValue("last-search-query", search);
-
+    
+    //search through list, how many times did the the name selected appear 
     QMapIterator<QString, Backend*> i(mIdMap);
     while (i.hasNext())
     {
